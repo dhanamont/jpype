@@ -101,8 +101,9 @@ def startJVM(jvm=None, *args, **kwargs):
     if 'classpath' in kwargs and kwargs['classpath']!=None:
         args.append('-Djava.class.path=%s'%(kwargs['classpath']))
         print("Set classpath")
-
-    _jpype.startup(jvm, tuple(args), kwargs['ignoreUnrecognized'])
+        
+    if not isJVMStarted():
+        _jpype.startup(jvm, tuple(args), kwargs['ignoreUnrecognized'])
     _initialize()
 
     # start the reference daemon thread
